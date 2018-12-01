@@ -17,30 +17,30 @@
 🔔 Для удобства и чистоты кода сохраните в переменные сообщения отображаемые в alert
 */
 
-// const adminLogin = 'admin';
-// const adminPassword = 'm4ng0h4ckz';
-// const userInputLogin = prompt('Введите Ваш логин!');
-// const canceled = 'Отменено пользователем!';
-// const loginError = 'Доступ запрещен, неверный логин!';
-// const passwordError = 'Доступ запрещен, неверный пароль!';
-// const welcome = 'Добро пожаловать!';
+const adminLogin = 'admin';
+const adminPassword = 'm4ng0h4ckz';
+const userInputLogin = prompt('Введите Ваш логин!');
+const canceled = 'Отменено пользователем!';
+const loginError = 'Доступ запрещен, неверный логин!';
+const passwordError = 'Доступ запрещен, неверный пароль!';
+const welcome = 'Добро пожаловать!';
 
-// if (!userInputLogin) {
-//     alert(canceled);
-// } else if (userInputLogin !== adminLogin) {
-//     alert(loginError);
-// } else {
+if (!userInputLogin) {
+    alert(canceled);
+} else if (userInputLogin !== adminLogin) {
+    alert(loginError);
+} else {
 
-//     const userInputPass = prompt('Введите Ваш пароль!');
+    const userInputPass = prompt('Введите Ваш пароль!');
 
-//     if (!userInputPass) {
-//         alert(canceled);
-//     } else if (userInputPass !== adminPassword) {
-//         alert(passwordError);
-//     } else {
-//         alert(welcome);
-//     }
-// }
+    if (!userInputPass) {
+        alert(canceled);
+    } else if (userInputPass !== adminPassword) {
+        alert(passwordError);
+    } else {
+        alert(welcome);
+    }
+}
 
 
 //=============================================================================
