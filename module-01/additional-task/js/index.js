@@ -95,7 +95,6 @@
 // console.log(`${totalWidth}px`); // '125px'
 //=============================================================================
 
-
 /*
     task-06
 
@@ -118,9 +117,6 @@
 //     alert('Но ведь на вдоре 2018!');
 // }
 //=============================================================================
-
-
-
 
 /*
     task-07
@@ -149,8 +145,6 @@
 
 //=============================================================================
 
-
-
 /*
     task-08
 
@@ -170,8 +164,6 @@
 // console.log(`${num} is ${type}`);
 //=============================================================================
 
-
-
 /*
     task-09
 
@@ -189,27 +181,24 @@
   тоесть значения переменных hours, minutes, seconds 
   и добавлят впереди 0 если необходимо.
 */
-let hours = 1;
-let minutes = 9;
-let seconds = 22;
+// let hours = 23;
+// let minutes = 59;
+// let seconds = 0;
 
+// if (hours >= 0 && hours <= 9) {
+//   hours = '0' + hours;
+// }
+// if (minutes >= 0 && minutes <= 9) {
+//   minutes = '0' + minutes;
+// }
+// if (seconds >= 0 && seconds <= 9) {
+//   seconds = '0' + seconds;
+// }
 
-if (hours >= 0 && hours <= 9) {
+// const time = `${hours}:${minutes}:${seconds}`;
 
-  hours = '0' + hours;
-
-} else if (minutes >= 0 && minutes <= 9) {
-
-  minutes = '0' + minutes;
-}
-
-const time = `${hours}:${minutes}:${seconds}`;
-
-console.log('Time is: ', time);
+// console.log('Time is: ', time);
 //=============================================================================
-
-
-
 
 /*
     task-10
