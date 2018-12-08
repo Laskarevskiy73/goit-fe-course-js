@@ -11,30 +11,30 @@
 
 */
 
-// let userInput;
-// const numbers = [];
-// let total = 0;
+let userInput;
+const numbers = [];
+let total = 0;
 
-// do {
-//     userInput = prompt('Введите число!');
-//     const hasNumber = Number(userInput);
+do {
+    userInput = prompt('Введите число!');
+    const hasNumber = Number(userInput);
 
-//     if (!userInput) {
-//         alert('Отменено пользователем!');
-//     } else if (!hasNumber) {
-//         alert('Введено не число! Попробуйте еще!');
-//     } else {
-//         numbers.push(hasNumber);
-//     }
+    if (!userInput) {
+        alert('Отменено пользователем!');
+    } else if (!hasNumber) {
+        alert('Введено не число! Попробуйте еще!');
+    } else {
+        numbers.push(hasNumber);
+    }
 
-// } while (userInput);
+} while (userInput);
 
-// for (const number of numbers) {
+for (const number of numbers) {
 
-//     total = number + total;
-// }
+    total = number + total;
+}
 
-// alert(`Общая сумма чисел равна ${total}`);
+alert(`Общая сумма чисел равна ${total}`);
 
 /*
 

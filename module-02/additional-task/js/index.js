@@ -139,13 +139,18 @@
   PS: используйте цикл for
 */
 
-// const min = 1;
-// const max = 100;
+const min = 1;
+const max = 100;
 
-// for (let i = 0; i < max; i += 1) {
-//   console.log(i);
-// }
-
+for (let i = 1; i <= max; i += 1) {
+  if (i % 3 === 0 && i % 5 === 0) {
+    console.log('Buzz');
+  } else if (i % 3 === 0) {
+    console.log('Fizz');
+  } else {
+    console.log(i);
+  }
+}
 
 //=============================================================================
 
@@ -239,7 +244,6 @@
 //   }
 
 // } while (userInput);
-
 
 // for (let i of arr) {
 
