@@ -54,33 +54,34 @@ alert(`Общая сумма чисел равна ${total}`);
 Если пользователь нажмет Cancel, прекратить выполнение цикла.
 
 */
+{
+    let userInput;
+    const passwords = ['qwerty', '111qwe', '123123', 'r4nd0mp4zzw0rd'];
+    let attempts = 3;
 
-let userInput;
-const passwords = ['qwerty', '111qwe', '123123', 'r4nd0mp4zzw0rd'];
-let attempts = 3;
+    do {
 
-do {
+        userInput = prompt('Введите пароль!');
 
-    userInput = prompt('Введите пароль!');
+        if (!userInput) {
 
-    if (!userInput) {
+            alert('Отменено пользователем!');
 
-        alert('Отменено пользователем!');
+        } else if (!passwords.includes(userInput)) {
+            attempts -= 1;
 
-    } else if (!passwords.includes(userInput)) {
-        attempts -= 1;
+            alert(`Неверный пароль, у вас осталось ${attempts} попыток`);
 
-        alert(`Неверный пароль, у вас осталось ${attempts} попыток`);
+            if (attempts === 0) {
+                alert('У вас закончились попытки, аккаунт заблокирован!');
 
-        if (attempts === 0) {
-            alert('У вас закончились попытки, аккаунт заблокирован!');
+                break;
+            }
+
+        } else {
+            alert('Добро пожаловать!');
 
             break;
         }
-
-    } else {
-        alert('Добро пожаловать!');
-
-        break;
-    }
-} while (userInput);
+    } while (userInput);
+}
