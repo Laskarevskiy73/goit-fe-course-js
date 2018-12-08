@@ -189,23 +189,23 @@
   тоесть значения переменных hours, minutes, seconds 
   и добавлят впереди 0 если необходимо.
 */
-let hours = 1;
-let minutes = 9;
-let seconds = 22;
+// let hours = 1;
+// let minutes = 9;
+// let seconds = 22;
 
 
-if (hours >= 0 && hours <= 9) {
+// if (hours >= 0 && hours <= 9) {
 
-  hours = '0' + hours;
+//   hours = '0' + hours;
 
-} else if (minutes >= 0 && minutes <= 9) {
+// } else if (minutes >= 0 && minutes <= 9) {
 
-  minutes = '0' + minutes;
-}
+//   minutes = '0' + minutes;
+// }
 
-const time = `${hours}:${minutes}:${seconds}`;
+// const time = `${hours}:${minutes}:${seconds}`;
 
-console.log('Time is: ', time);
+// console.log('Time is: ', time);
 //=============================================================================
 
 
