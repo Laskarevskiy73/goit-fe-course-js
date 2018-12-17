@@ -303,7 +303,7 @@
 
 */
 
-const removeFromArray = function (arr, ...values) {
+const removeFromArray = function (arr) {
 
 };
 
