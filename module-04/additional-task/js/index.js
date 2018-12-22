@@ -246,15 +246,11 @@
 */
 
 const getAllPropValues = (arr, prop) => {
-
   // console.log(arr);
-
-  for (let i of arr) {
-
-    console.log(i[prop]);
-
+  // console.log(prop);
+  for (let value of arr) {
+    console.log(value);
   }
-
 
 }
 

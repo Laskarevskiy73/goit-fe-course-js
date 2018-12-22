@@ -109,21 +109,10 @@ const cashier = {
     },
     reset() {
 
-        const resetObj = {
-            customerMoney: 0,
-            totalPrice: 0,
-            change: 0,
-            error: null
-        };
-
-        // const reset = { ...cashier,
-        //     ...resetObj
-        // };
-
-        // return reset;
-
-        const reset = Object.assign(cashier, resetObj);
-        return reset;
+        cashier.customerMoney = 0;
+        cashier.totalPrice = 0;
+        cashier.change = 0;
+        cashier.error = null;
     }
 }
 
