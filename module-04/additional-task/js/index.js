@@ -246,12 +246,22 @@
 */
 
 const getAllPropValues = (arr, prop) => {
-  // console.log(arr);
-  // console.log(prop);
-  for (let value of arr) {
-    console.log(value);
-  }
 
+  let newArr = [];
+
+  for (let element of arr) {
+    // console.log(element);
+
+    const keyElement = Object.keys(element);
+    // console.log(keyElement);
+
+    if (keyElement.includes(prop)) {
+
+      newArr.push(element[prop]);
+    }
+
+  }
+  return newArr;
 }
 
 const users = [{
