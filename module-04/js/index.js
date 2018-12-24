@@ -45,6 +45,8 @@ reset() - метод, сбрасывает поля customerMoney, totalPrice, c
 
 */
 
+'use strict';
+
 const products = {
     bread: 10,
     milk: 15,
@@ -67,10 +69,10 @@ const cashier = {
     change: 0,
     error: null,
     greet() {
-        return console.log(`Добрый день, вас обслуживает ${cashier.name}`);
+        return console.log(`Добрый день, вас обслуживает ${this.name}`);
     },
     getCustomerMoney(value) {
-        return cashier.customerMoney = value;
+        return this.customerMoney = value;
     },
     countTotalPrice(allProducts, order) {
 
@@ -81,24 +83,24 @@ const cashier = {
 
             if (keysOrder.includes(values)) {
 
-                cashier.totalPrice += allProducts[values] * order[values];
+                this.totalPrice += allProducts[values] * order[values];
 
             }
         }
 
-        return cashier.totalPrice;
+        return this.totalPrice;
     },
     countChange() {
 
-        cashier.change = cashier.customerMoney - cashier.totalPrice;
+        this.change = this.customerMoney - this.totalPrice;
 
-        return cashier.change;
+        return this.change;
     },
     onSuccess() {
 
-        const equalsTotalPrice = cashier.customerMoney === cashier.totalPrice ?
+        const equalsTotalPrice = this.customerMoney === this.totalPrice ?
             console.log('Спасибо за покупку!') :
-            console.log(`Спасибо за покупку, ваша сдача ${cashier.change}!`);
+            console.log(`Спасибо за покупку, ваша сдача ${this.change}!`);
 
         return equalsTotalPrice;
 
@@ -109,10 +111,10 @@ const cashier = {
     },
     reset() {
 
-        cashier.customerMoney = 0;
-        cashier.totalPrice = 0;
-        cashier.change = 0;
-        cashier.error = null;
+        this.customerMoney = 0;
+        this.totalPrice = 0;
+        this.change = 0;
+        this.error = null;
     }
 }
 
