@@ -303,7 +303,19 @@
 
 */
 
-const removeFromArray = function (arr, ...values) {};
+const removeFromArray = function (arr) {
+  const arg = Array.from(arguments);
+  const valuesArgs = arg.slice(1);
+
+  for (let element of valuesArgs) {
+    const idx = arr.indexOf(element);
+
+    if (arr.includes(element)) {
+      arr.splice(idx, 1);
+    }
+  }
+  return arr;
+};
 
 // Вызовы функции для проверки
 console.log(
