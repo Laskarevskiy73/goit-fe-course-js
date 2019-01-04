@@ -36,11 +36,10 @@ const notebook = {
   },
   findNoteById(id) {
     for (const note of this.notes) {
-
       if (note.id === id) {
         return note;
-      };
-    };
+      }
+    }
   },
   saveNote(note) {
     this.notes.push(note);
@@ -51,8 +50,8 @@ const notebook = {
 
       if (note.id === id) {
         return this.notes.splice(i, 1);
-      };
-    };
+      }
+    }
   },
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
@@ -80,15 +79,14 @@ const notebook = {
   filterNotes(query) {
     const filteredNote = [];
     for (let i = 0; i < this.notes.length; i += 1) {
-
       const { title, body } = this.notes[i];
       const note = `${title} ${body}`;
       const resultNote = note.toLowerCase().includes(query.toLowerCase());
 
       if (resultNote) {
         filteredNote.push(this.notes[i]);
-      };
-    };
+      }
+    }
     return filteredNote;
   },
   filterByPriority(priority) {
@@ -96,11 +94,10 @@ const notebook = {
     const notes = this.getNotes();
 
     for (const note of notes) {
-
       if (note.priority === priority) {
         filteredNotesOnPriority.push(note);
-      };
-    };
+      }
+    }
     return filteredNotesOnPriority;
   },
 };
@@ -149,7 +146,6 @@ console.log('Все текущие заметки: ', notebook.getNotes());
 */
 console.log(notebook.findNoteById(1));
 
-
 /*
   Зима уже близко, пора поднять приоритет на покупку одежды
 */
@@ -160,7 +156,6 @@ console.log(
   notebook.getNotes(),
 );
 
-
 /*
   Решил что фреймворки отложу немного, понижаю приоритет
 */
@@ -169,7 +164,6 @@ console.log(
   'Заметки после обновления приоритета для id 3: ',
   notebook.getNotes(),
 );
-
 
 /*
   Решил отфильтровать заметки по слову html
@@ -186,7 +180,6 @@ console.log(
   'Отфильтровали заметки по ключевому слову "javascript": ',
   notebook.filterNotes('javascript'),
 );
-
 
 /*
   Обновим контент заметки с id 3
@@ -215,7 +208,6 @@ console.log(
 //   notebook.getNotes(),
 // );
 
-
 /*
   Повторил HTML и CSS, удаляю запись c id 2
   */
@@ -225,5 +217,7 @@ console.log('Заметки после удаления с id 2: ', notebook.get
 /*
   Выберает все заметки с указаным приоритетом
 */
-console.log('Отфильтрованые заметки по приоритету: ', notebook.filterByPriority(PRIORITY_TYPES.HIGH));
-
+console.log(
+  'Отфильтрованые заметки по приоритету: ',
+  notebook.filterByPriority(PRIORITY_TYPES.HIGH),
+);
