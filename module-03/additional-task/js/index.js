@@ -294,7 +294,7 @@
 
   Создайте функцию removeFromArray(arr), 
   которая объявляет 1 параметр, исходный массив arr.
-  
+
   При вызове функции, первым аргументом всегда будет массив чисел,
   за которым следуют один или несколько аргументов, тоже чисел. 
   
@@ -303,8 +303,18 @@
 
 */
 
-const removeFromArray = function (arr, ...values) {
+const removeFromArray = function (arr) {
+  const arg = Array.from(arguments);
+  const valuesArgs = arg.slice(1);
 
+  for (let element of valuesArgs) {
+    const idx = arr.indexOf(element);
+
+    if (arr.includes(element)) {
+      arr.splice(idx, 1);
+    }
+  }
+  return arr;
 };
 
 // Вызовы функции для проверки
