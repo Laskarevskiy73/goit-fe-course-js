@@ -271,7 +271,14 @@ const orderB = {
   cheese: 3,
 };
 
-const getTotalPrice = (products, order) => {};
+const getTotalPrice = (products, order) => {
+  const orderKeys = Object.keys(order);
+  console.log(orderKeys);
+
+  return orderKeys.reduce((acc, element) => {
+    return acc + order[element] * products[element];
+  }, 0);
+};
 
 // Вызовы функции для проверки
 console.log(getTotalPrice(products, orderA)); // 140
