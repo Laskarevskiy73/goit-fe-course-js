@@ -126,7 +126,7 @@ console.log(getUsersByGender(users, 'male'));
 // Получить массив только неактивных пользователей (поле isActive).
 const getInactiveUsers = users => users.filter(user => !user.isActive);
 
-console.table(getInactiveUsers(users));
+console.log(getInactiveUsers(users));
 // [объект Moore Hensley, объект Ross Vazquez, объект Blackburn Dotson]
 
 // Получить пользоваля (не массив) по email (поле email, он уникальный).
@@ -142,10 +142,10 @@ console.log(getUserByEmail(users, 'shereeanthony@kog.com'));
 const getUsersWithAge = (users, min, max) =>
   users.filter(user => user.age > min && user.age < max);
 
-console.table(getUsersWithAge(users, 20, 30));
+console.log(getUsersWithAge(users, 20, 30));
 // [объект Ross Vazquez, объект Elma Head, объект Carey Barr]
 
-console.table(getUsersWithAge(users, 30, 40));
+console.log(getUsersWithAge(users, 30, 40));
 // [объект Moore Hensley, объект Sharlene Bush, объект Blackburn Dotson, объект Sheree Anthony]
 
 // Получить общую сумму баланса (поле balance) всех пользователей.
@@ -157,7 +157,7 @@ console.log(getTotalBalance(users));
 
 // Массив имен всех пользователей у которых есть друг с указанным именем.
 const getUsersByFriend = (users, name) =>
-  users.filter(user => user.friends.includes(name));
+  users.filter(user => user.friends.includes(name)).map(user => user.name);
 
-console.table(getUsersByFriend(users, 'Briana Decker')); // [ 'Sharlene Bush', 'Sheree Anthony' ]
-console.table(getUsersByFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree Anthony' ]
+console.log(getUsersByFriend(users, 'Briana Decker')); // [ 'Sharlene Bush', 'Sheree Anthony' ]
+console.log(getUsersByFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree Anthony' ]
