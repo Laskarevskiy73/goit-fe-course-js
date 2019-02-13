@@ -1,0 +1,16 @@
+.gallery {
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+}
+.list-item {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.styling-image {
+  width: 100%;
+}
+.styling-image:hover {
+  opacity: 0.6;
+  transition: all 2000ms;
+}

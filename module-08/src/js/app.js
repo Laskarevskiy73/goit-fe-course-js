@@ -96,13 +96,18 @@ class Notepad {
 
   static getPriorityName(priorityId) {
     const valuesPriorityType = Object.values(PRIORITY_TYPES);
-    const idPriorities = Notepad.PRIORITIES[priorityId].id;
 
-    if (valuesPriorityType.includes(idPriorities)) {
+    if (valuesPriorityType.includes(priorityId)) {
       return Notepad.PRIORITIES[priorityId].name;
     }
   }
 }
+
+Notepad.PRIORITIES = {
+  0: { id: 0, value: 0, name: 'Low' },
+  1: { id: 1, value: 1, name: 'Normal' },
+  2: { id: 2, value: 2, name: 'High' },
+};
 
 const initialNotes = [
   {
@@ -136,7 +141,7 @@ const initialNotes = [
 ];
 
 const item = new Notepad(initialNotes);
-// console.log(item.notes); // Получение все notes - get-ром
+console.log(item.notes); // Получение все notes - get-ром
 
 const list = document.querySelector('.note-list');
 // console.log(list);
@@ -153,7 +158,8 @@ const createListItem = note => {
   // console.log(listBox);
 
   listItem.appendChild(listBox);
-  listBox.append(createNoteContent(note), createNoteFooter());
+  listBox.append(createNoteContent(note), createNoteFooter(note));
+
   return listItem;
 };
 
@@ -179,7 +185,7 @@ const createNoteContent = ({ title, body }) => {
 };
 
 // Для footer.note__footer
-const createNoteFooter = () => {
+const createNoteFooter = note => {
   const footer = document.createElement('footer');
   footer.classList.add('note__footer');
   // console.log(footer);
@@ -206,7 +212,8 @@ const createNoteFooter = () => {
 
   const priority = document.createElement('span');
   priority.classList.add('note__priority');
-  priority.textContent = 'Priority: Low';
+  priority.textContent = `Priority: ${Notepad.getPriorityName(note.priority)}`;
+
   // console.log(priority);
 
   const sectionActions = document.createElement('section');

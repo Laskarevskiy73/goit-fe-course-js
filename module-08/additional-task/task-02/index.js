@@ -1,5 +1,4 @@
 'use strict';
-
 /*
   Дан список с классом .list
 	- Найдите первого потомка списка и сделайте его текст красного цвета
@@ -7,6 +6,8 @@
 */
 
 const list = document.querySelector('.list');
-console.log(list.firstElementChild.classList.add('.color-red'));
+
+list.firstElementChild.classList.add('red');
+list.lastElementChild.classList.add('blue');
 
 //=============================================================================
