@@ -38,13 +38,7 @@ class Notepad {
     this._notes.push(note);
   }
   deleteNote(id) {
-    for (let i = 0; i < this._notes.length; i += 1) {
-      const note = this._notes[i];
-
-      if (note.id === id) {
-        return this._notes.splice(i, 1);
-      }
-    }
+    this._notes = this._notes.filter(item => item.id !== id);
   }
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
@@ -53,13 +47,6 @@ class Notepad {
     for (const key of updateNoteContent) {
       note[key] = updatedContent[key];
     }
-
-    // Вариант с Деструкторизацией!
-
-    // const { fields, value } = updatedContent;
-    // const note = this.findNoteById(id);
-
-    // return note[fields] = value;
   }
   updateNotePriority(id, priority) {
     const note = this.findNoteById(id);
@@ -70,18 +57,16 @@ class Notepad {
     note.priority = priority;
   }
   filterNotesByQuery(query) {
-    console.log(query);
-
-    // const filteredNote = [];
-    // for (let i = 0; i < this._notes.length; i += 1) {
-    //   const { title, body } = this._notes[i];
-    //   const note = `${title} ${body}`;
-    //   const resultNote = note.toLowerCase().includes(query.toLowerCase());
-    //   if (resultNote) {
-    //     filteredNote.push(this._notes[i]);
-    //   }
-    // }
-    // return filteredNote;
+    const filteredNote = [];
+    for (let i = 0; i < this._notes.length; i += 1) {
+      const { title, body } = this._notes[i];
+      const note = `${title} ${body}`;
+      const resultNote = note.toLowerCase().includes(query.toLowerCase());
+      if (resultNote) {
+        filteredNote.push(this._notes[i]);
+      }
+    }
+    return filteredNote;
   }
   filterNotesByPriority(priority) {
     const filteredNotesOnPriority = [];
@@ -146,6 +131,7 @@ const initialNotes = [
 const item = new Notepad(initialNotes);
 // console.log(item.notes); // Получение все notes - get-ром
 
+// Referens
 const refs = {
   list: document.querySelector('.note-list'),
   editor: document.querySelector('.note-editor'),
@@ -154,16 +140,12 @@ const refs = {
 
 // Function create list all
 const createListItem = note => {
-  // console.log(note);
-
   const listItem = document.createElement('li');
   listItem.classList.add('note-list__item');
   listItem.dataset.id = note.id;
-  // console.log(listItem);
 
   const listBox = document.createElement('div');
   listBox.classList.add('note');
-  // console.log(listBox);
 
   listItem.appendChild(listBox);
   listBox.append(createNoteContent(note), createNoteFooter(note));
@@ -175,17 +157,14 @@ const createListItem = note => {
 const createNoteContent = ({ title, body }) => {
   const noteContent = document.createElement('div');
   noteContent.classList.add('note__content');
-  // console.log(noteContent);
 
   const noteTitle = document.createElement('h2');
   noteTitle.classList.add('note__title');
   noteTitle.textContent = title;
-  // console.log(noteTitle);
 
   const noteBody = document.createElement('p');
   noteBody.classList.add('note__body');
   noteBody.textContent = body;
-  // console.log(noteBody);
 
   noteContent.append(noteTitle, noteBody);
 
@@ -196,52 +175,40 @@ const createNoteContent = ({ title, body }) => {
 const createNoteFooter = note => {
   const footer = document.createElement('footer');
   footer.classList.add('note__footer');
-  // console.log(footer);
 
   const sectionPriority = document.createElement('section');
   sectionPriority.classList.add('note__section');
-  // console.log(sectionPriority);
 
   const decreaseButton = actionsButton();
   decreaseButton.dataset.actions = NOTE_ACTIONS.DECREASE_PRIORITY;
-  // console.log(decreaseButton);
 
   const increaseButton = actionsButton();
   increaseButton.dataset.actions = NOTE_ACTIONS.INCREASE_PRIORITY;
-  // console.log(increaseButton);
 
   const iconMore = icon();
   iconMore.textContent = 'expand_more';
-  // console.log(iconMore);
 
   const iconLess = icon();
   iconLess.textContent = 'expand_less';
-  // console.log(iconLess);
 
   const priority = document.createElement('span');
   priority.classList.add('note__priority');
   priority.textContent = `Priority: ${Notepad.getPriorityName(note.priority)}`;
-  // console.log(priority);
 
   const sectionActions = document.createElement('section');
   sectionActions.classList.add('note__section');
-  // console.log(sectionActions);
 
   const editNoteButton = actionsButton();
   editNoteButton.dataset.actions = NOTE_ACTIONS.EDIT;
-  // console.log(editNoteButton);
 
   const iconEdit = icon();
   iconEdit.textContent = ICON_TYPES.EDIT;
-  // console.log(iconEdit);
 
   const deleteNoteButton = actionsButton();
   deleteNoteButton.dataset.actions = NOTE_ACTIONS.DELETE;
-  // console.log(deleteNoteButton);
 
   const iconDelete = icon();
   iconDelete.textContent = ICON_TYPES.DELETE;
-  // console.log(iconDelete);
 
   footer.append(sectionPriority, sectionActions);
   sectionPriority.append(decreaseButton, increaseButton, priority);
@@ -259,7 +226,6 @@ const createNoteFooter = note => {
 const actionsButton = () => {
   const button = document.createElement('button');
   button.classList.add('action');
-  // console.log(button);
 
   return button;
 };
@@ -269,7 +235,6 @@ const icon = () => {
   const icon = document.createElement('i');
   icon.classList.add('material-icons');
   icon.classList.add('action__icon');
-  // console.log(icon);
 
   return icon;
 };
@@ -277,11 +242,12 @@ const icon = () => {
 const renderNoteList = (listRef, notes) => {
   const listItems = notes.map(item => createListItem(item));
 
+  listRef.innerHTML = '';
   listRef.append(...listItems);
 };
-
 renderNoteList(refs.list, item.notes);
 
+// Function Generate Unique ID
 const generateUniqueId = () =>
   Math.random()
     .toString(36)
@@ -298,17 +264,17 @@ const addListItem = (listRef, title, body) => {
     priority: Notepad.getPriorityName(),
   });
 
+  item.saveNote(createItem);
   listRef.appendChild(createItem);
 };
 
+// Handlers
 const handleEditorSubmit = event => {
   event.preventDefault(); // Действия браузера по умолчанию
 
-  const [title, body] = event.target.elements;
-
+  const [title, body] = event.currentTarget.elements;
   const titleValue = title.value;
   const bodyValue = body.value;
-
   const checkForEmptinessForm =
     titleValue.length === 0 || bodyValue.length === 0;
 
@@ -317,16 +283,39 @@ const handleEditorSubmit = event => {
   }
 
   addListItem(refs.list, titleValue, bodyValue);
-
   event.currentTarget.reset();
 };
 
 const handleFilterNotes = event => {
-  console.log(event.target.value);
+  const filterNotes = item.filterNotesByQuery(event.target.value);
 
-  const filterNotes = Notepad.filterNotesByPriority(event.target.value);
-  console.table(filterNotes);
+  renderNoteList(refs.list, filterNotes);
 };
 
+const handleDeleteNote = ({ target }) => {
+  if (target.nodeName !== 'I') {
+    return;
+  }
+
+  const parentButton = target.closest('.action');
+  const actions = parentButton.dataset.actions;
+
+  switch (actions) {
+    case NOTE_ACTIONS.DELETE:
+      removeListItem(target);
+      break;
+  }
+};
+
+const removeListItem = element => {
+  const parentListItem = element.closest('.note-list__item');
+  const currentId = parentListItem.dataset.id;
+
+  item.deleteNote(currentId);
+  parentListItem.remove();
+};
+
+// Listeners
 refs.editor.addEventListener('submit', handleEditorSubmit);
 refs.filter.addEventListener('input', handleFilterNotes);
+refs.list.addEventListener('click', handleDeleteNote);
