@@ -34,8 +34,17 @@ class Notepad {
       }
     }
   }
-  saveNote(note) {
-    this._notes.push(note);
+  saveNote(title, body) {
+    const newItem = {
+      id: generateUniqueId(),
+      title: title,
+      body: body,
+      priority: Notepad.getPriorityName(),
+    };
+
+    this._notes.push(newItem);
+
+    return newItem;
   }
   deleteNote(id) {
     this._notes = this._notes.filter(item => item.id !== id);
@@ -129,7 +138,7 @@ const initialNotes = [
 ];
 
 const item = new Notepad(initialNotes);
-// console.log(item.notes); // Получение все notes - get-ром
+console.log(item.notes); // Получение все notes - get-ром
 
 // Referens
 const refs = {
@@ -256,16 +265,10 @@ const generateUniqueId = () =>
     .toString(36)
     .substring(2, 15);
 
-const addListItem = (listRef, title, body) => {
-  const createItem = createListItem({
-    id: generateUniqueId(),
-    title: title,
-    body: body,
-    priority: Notepad.getPriorityName(),
-  });
+const addListItem = (listRef, item) => {
+  const createItem = createListItem(item);
 
-  item.saveNote(createItem);
-  listRef.appendChild(createItem);
+  listRef.append(createItem);
 };
 
 // Handlers
@@ -275,15 +278,18 @@ const handleEditorSubmit = event => {
   const [title, body] = event.currentTarget.elements;
   const titleValue = title.value;
   const bodyValue = body.value;
+
   const checkForEmptinessForm =
     titleValue.length === 0 || bodyValue.length === 0;
 
   if (checkForEmptinessForm) {
     return alert('Необходимо заполнить все поля!');
   }
+  const savedItem = item.saveNote(titleValue, bodyValue);
 
-  addListItem(refs.list, titleValue, bodyValue);
+  addListItem(refs.list, savedItem);
   event.currentTarget.reset();
+  console.log(item._notes);
 };
 
 const handleFilterNotes = event => {
@@ -303,6 +309,8 @@ const handleDeleteNote = ({ target }) => {
   switch (actions) {
     case NOTE_ACTIONS.DELETE:
       removeListItem(target);
+      console.log(item._notes);
+
       break;
   }
 };
