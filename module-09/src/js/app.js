@@ -138,7 +138,7 @@ const initialNotes = [
 ];
 
 const item = new Notepad(initialNotes);
-console.log(item.notes); // Получение все notes - get-ром
+// console.log(item.notes); // Получение все notes - get-ром
 
 // Referens
 const refs = {
@@ -309,8 +309,6 @@ const handleDeleteNote = ({ target }) => {
   switch (actions) {
     case NOTE_ACTIONS.DELETE:
       removeListItem(target);
-      console.log(item._notes);
-
       break;
   }
 };
@@ -319,7 +317,7 @@ const removeListItem = element => {
   const parentListItem = element.closest('.note-list__item');
   const currentId = parentListItem.dataset.id;
 
-  item.deleteNote(currentId);
+  item.deleteNote(Number(currentId));
   parentListItem.remove();
 };
 
