@@ -17,8 +17,9 @@ export const refs = {
 export const renderNoteList = (listRef, notes) => {
   // const listItems = notes.map(item => createlistItem(item)).join('');
   const listItems = notes.map(item => {
-    item.priority = Notepad.getPriorityName(item.priority);
-    return createlistItem(item);
+    const newItems = { ...item };
+    newItems.priority = Notepad.getPriorityName(newItems.priority);
+    return createlistItem(newItems);
   });
 
   listRef.innerHTML = '';
@@ -26,8 +27,9 @@ export const renderNoteList = (listRef, notes) => {
 };
 
 export const addListItem = (listRef, item) => {
-  item.priority = Notepad.getPriorityName(item.priority);
-  const createItem = createlistItem(item);
+  const newItems = { ...item };
+  newItems.priority = Notepad.getPriorityName(newItems.priority);
+  const createItem = createlistItem(newItems);
 
   listRef.insertAdjacentHTML('afterbegin', createItem);
 };
