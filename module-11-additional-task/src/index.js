@@ -43,7 +43,7 @@ import template from './template/template-2.hbs';
   Используйте эту иконку для фона:
   https://image.flaticon.com/icons/svg/290/290413.svg
 */
-
+const list = document.querySelector('.post');
 const posts = [
   {
     title: 'Phasellus volutpat metus',
@@ -70,5 +70,16 @@ const posts = [
     isFav: false,
   },
 ];
+
+const renderPosts = posts => {
+  const postList = posts.map(post => template(post));
+
+  list.insertAdjacentHTML('beforeend', postList.join(''));
+
+  return postList;
+};
+renderPosts(posts);
+
+// Нужно добавить иконку и кого есть поле true (в массиве обьектов)
 
 //=============================================================================
