@@ -20,6 +20,7 @@ console.log(item.notes);
 // LocalStorage
 //=============================================================================
 storage.save('notes', item.notes);
+
 //=============================================================================
 
 renderNoteList(refs.list, storage.load('notes'));
