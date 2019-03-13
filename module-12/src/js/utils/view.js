@@ -1,6 +1,5 @@
 import createlistItem from '../../templates/list-items.hbs';
 import Notepad from './notepad-model';
-import storage from './storage';
 
 // Referens
 //=============================================================================
@@ -24,7 +23,7 @@ export const renderNoteList = (listRef, notes) => {
   });
 
   listRef.innerHTML = '';
-  listRef.insertAdjacentHTML('beforeend', listItems.join(''));
+  listRef.insertAdjacentHTML('afterbegin', listItems.join(''));
 };
 
 export const addListItem = (listRef, item) => {

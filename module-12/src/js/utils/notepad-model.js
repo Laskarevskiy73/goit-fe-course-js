@@ -18,18 +18,39 @@ export default class Notepad {
     }
   }
   saveNote(title, body) {
-    const newItem = {
-      id: shortid.generate(),
-      title: title,
-      body: body,
-      priority: Notepad.getPriorityName(),
-    };
-    this._notes.push(newItem);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const newItem = {
+          id: shortid.generate(),
+          title: title,
+          body: body,
+          priority: Notepad.getPriorityName(),
+        };
 
-    return newItem;
+        this._notes.push(newItem);
+
+        // LocalStorage
+        //=============================================================================
+        storage.save('notes', this._notes);
+        //=============================================================================
+
+        resolve(newItem);
+      }, 1000);
+    });
   }
   deleteNote(id) {
-    this._notes = this._notes.filter(item => item.id !== id);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this._notes = this._notes.filter(item => item.id !== id);
+
+        // LocalStorage
+        //=============================================================================
+        storage.save('notes', this._notes);
+        //=============================================================================
+
+        resolve(this._notes);
+      }, 1000);
+    });
   }
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
@@ -48,16 +69,21 @@ export default class Notepad {
     note.priority = priority;
   }
   filterNotesByQuery(query) {
-    const filteredNote = [];
-    for (let i = 0; i < this._notes.length; i += 1) {
-      const { title, body } = this._notes[i];
-      const note = `${title} ${body}`;
-      const resultNote = note.toLowerCase().includes(query.toLowerCase());
-      if (resultNote) {
-        filteredNote.push(this._notes[i]);
-      }
-    }
-    return filteredNote;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const filteredNote = [];
+        for (let i = 0; i < this._notes.length; i += 1) {
+          const { title, body } = this._notes[i];
+          const note = `${title} ${body}`;
+          const resultNote = note.toLowerCase().includes(query.toLowerCase());
+          if (resultNote) {
+            filteredNote.push(this._notes[i]);
+          }
+
+          resolve(filteredNote);
+        }
+      }, 1000);
+    });
   }
   filterNotesByPriority(priority) {
     const filteredNotesOnPriority = [];
