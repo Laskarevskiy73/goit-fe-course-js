@@ -4,7 +4,6 @@ import 'notyf/dist/notyf.min.css';
 import storage from './utils/storage';
 import { NOTE_ACTIONS } from './utils/constants';
 import Notepad from './utils/notepad-model';
-import initialNotes from '../assets/notes.json';
 import { refs, renderNoteList, addListItem } from './utils/view';
 
 // Plugins
@@ -14,16 +13,15 @@ const notyf = new Notyf({
 });
 //=============================================================================
 
-const item = new Notepad(initialNotes);
-console.log(item.notes);
-
 // LocalStorage
 //=============================================================================
-storage.save('notes', item.notes);
-
+const getNotesFromLocalStorage = storage.load('notes');
+const getNotes = getNotesFromLocalStorage ? getNotesFromLocalStorage : [];
 //=============================================================================
 
-renderNoteList(refs.list, storage.load('notes'));
+const item = new Notepad(getNotes);
+// console.log(item.notes);
+renderNoteList(refs.list, item._notes);
 
 // Handlers
 //=============================================================================
@@ -42,8 +40,8 @@ const handleEditorSubmit = event => {
   }
 
   const savedItem = item.saveNote(titleValue, bodyValue);
+  savedItem.then(savedNotes => addListItem(refs.list, savedNotes));
 
-  addListItem(refs.list, savedItem);
   event.currentTarget.reset();
   MicroModal.close('note-editor-modal');
   notyf.confirm('Заметка успешно добавлена!');
@@ -58,8 +56,7 @@ const handleEditorSubmit = event => {
 
 const handleFilterNotes = event => {
   const filterNotes = item.filterNotesByQuery(event.target.value);
-
-  renderNoteList(refs.list, filterNotes);
+  filterNotes.then(noteFilter => renderNoteList(refs.list, noteFilter));
 };
 
 const handleDeleteNote = ({ target }) => {
@@ -85,8 +82,8 @@ const removeListItem = element => {
   const parentListItem = element.closest('.note-list__item');
   const currentId = parentListItem.dataset.id;
 
-  item.deleteNote(currentId);
-  parentListItem.remove();
+  const deleteNote = item.deleteNote(currentId);
+  deleteNote.then(noteDelete => parentListItem.remove(noteDelete));
   notyf.confirm('Заметка успешно удалена!');
 
   // LocalStorage
