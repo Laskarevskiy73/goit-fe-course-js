@@ -35,7 +35,7 @@ export default class Notepad {
         //=============================================================================
 
         resolve(newItem);
-      }, 1000);
+      }, 200);
     });
   }
   deleteNote(id) {
@@ -49,7 +49,7 @@ export default class Notepad {
         //=============================================================================
 
         resolve(this._notes);
-      }, 1000);
+      }, 200);
     });
   }
   updateNoteContent(id, updatedContent) {
@@ -82,7 +82,7 @@ export default class Notepad {
 
           resolve(filteredNote);
         }
-      }, 1000);
+      }, 200);
     });
   }
   filterNotesByPriority(priority) {
