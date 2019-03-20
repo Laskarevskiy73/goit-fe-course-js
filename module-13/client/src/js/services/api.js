@@ -41,3 +41,21 @@ export const deleteNote = id => {
     throw new Error(response.statusText);
   });
 };
+
+export const updateNote = (id, updateNote) => {
+  const options = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updateNote),
+  };
+
+  return fetch(`${BASE_URL}/${id}`, options).then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+
+    throw new Error(response.statusText);
+  });
+};
