@@ -60,7 +60,6 @@ export default class Notepad {
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
     const updateNoteContent = Object.keys(updatedContent);
-
     for (const key of updateNoteContent) {
       note[key] = updatedContent[key];
     }
