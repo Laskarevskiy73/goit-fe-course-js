@@ -1,6 +1,6 @@
 import MicroModal from 'micromodal';
-import Notyf from 'notyf';
-import 'notyf/dist/notyf.min.css';
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 import { NOTE_ACTIONS } from './utils/constants';
 import Notepad from './utils/notepad-model';
 import { refs, renderNoteList, addListItem } from './utils/view';
@@ -10,14 +10,24 @@ import * as api from './services/api';
 //=============================================================================
 const notyf = new Notyf({
   delay: 2500,
+  types: [
+    {
+      type: 'info',
+      backgroundColor: '#f1ae13',
+    },
+    {
+      type: 'delete',
+      backgroundColor: '#68aaf1',
+    },
+  ],
 });
 //=============================================================================
 
 const item = new Notepad();
-// console.log(item.notes);
 
 api.getNotes().then(note => {
   renderNoteList(refs.list, note);
+  item._notes = note;
 });
 
 // Handlers
@@ -33,28 +43,31 @@ const handleEditorSubmit = event => {
     titleValue.length === 0 || bodyValue.length === 0;
 
   if (checkForEmptinessForm) {
-    return notyf.alert('Необходимо заполнить все поля!');
+    return notyf.open({
+      type: 'info',
+      message: 'Необходимо заполнить все поля!',
+    });
   }
 
-  const savedItem = item.saveNote(titleValue, bodyValue);
+  try {
+    const savedItem = item.saveNote(titleValue, bodyValue);
 
-  savedItem
-    .then(savedNotes => {
+    savedItem.then(savedNotes => {
       addListItem(refs.list, savedNotes);
-      notyf.confirm('Заметка успешно добавлена!');
-    })
-    .catch(error => {
-      notyf.alert(error);
+      notyf.success('Заметка успешно добавлена!');
     });
+  } catch (error) {
+    notyf.error(`${error}`);
+  }
 
   event.currentTarget.reset();
   MicroModal.close('note-editor-modal');
-
-  console.log(item._notes);
 };
 
 const handleFilterNotes = event => {
   const filterNotes = item.filterNotesByQuery(event.target.value);
+  console.log(item._notes);
+
   filterNotes.then(noteFilter => renderNoteList(refs.list, noteFilter));
 };
 
@@ -81,17 +94,19 @@ const removeListItem = element => {
   const parentListItem = element.closest('.note-list__item');
   const currentId = parentListItem.dataset.id;
 
-  const deleteNote = item.deleteNote(currentId);
-  deleteNote
-    .then(noteDelete => {
-      parentListItem.remove(noteDelete);
-      notyf.confirm('Заметка успешно удалена!');
-    })
-    .catch(error => {
-      notyf.alert(error);
-    });
+  try {
+    const deleteNote = item.deleteNote(currentId);
 
-  console.log(item._notes);
+    deleteNote.then(noteDelete => {
+      parentListItem.remove(noteDelete);
+      notyf.open({
+        type: 'delete',
+        message: 'Заметка успешно удалена!',
+      });
+    });
+  } catch (error) {
+    notyf.error(`${error}`);
+  }
 };
 //=============================================================================
 

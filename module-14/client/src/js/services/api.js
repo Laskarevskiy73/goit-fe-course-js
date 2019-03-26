@@ -1,43 +1,32 @@
+import axios from 'axios';
 const BASE_URL = 'http://localhost:3000/notes';
 
-export const getNotes = () => {
-  return fetch(BASE_URL).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
+export const getNotes = async () => {
+  try {
+    const notes = await axios.get(BASE_URL);
 
-    throw new Error(response.statusText);
-  });
+    return notes.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const saveNote = note => {
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(note),
-  };
+export const saveNote = async note => {
+  try {
+    const response = await axios.post(BASE_URL, note);
 
-  return fetch(BASE_URL, options).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-
-    throw new Error(response.statusText);
-  });
+    return response.data;
+  } catch (error) {
+    throw error.message;
+  }
 };
 
-export const deleteNote = id => {
-  const options = {
-    method: 'DELETE',
-  };
+export const deleteNote = async id => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/${id}`);
 
-  return fetch(`${BASE_URL}/${id}`, options).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-
-    throw new Error(response.statusText);
-  });
+    return response;
+  } catch (error) {
+    throw error;
+  }
 };

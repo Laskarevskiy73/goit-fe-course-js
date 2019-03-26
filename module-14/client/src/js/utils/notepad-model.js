@@ -6,11 +6,15 @@ export default class Notepad {
     this._notes = notes;
   }
   get notes() {
-    return api.getNotes().then(notes => {
-      this._notes = notes;
+    const notes = api.getNotes();
+    console.log(notes);
 
-      return this._notes;
-    });
+    // return api.getNotes().then(notes => {
+
+    this._notes = notes;
+
+    return this._notes;
+    // });
   }
   findNoteById(id) {
     for (const note of this._notes) {
@@ -20,42 +24,27 @@ export default class Notepad {
     }
   }
   saveNote(title, body) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const newItem = {
-          title: title,
-          body: body,
-          priority: Notepad.getPriorityName(),
-        };
-
-        resolve(newItem);
-      }, 200);
-    })
-      .then(note => {
-        return api.saveNote(note);
-      })
-      .then(note => {
-        this._notes.push(note);
-
-        return note;
+    try {
+      const newNote = {
+        title: title,
+        body: body,
+        priority: Notepad.getPriorityName(),
+      };
+      const note = api.saveNote(newNote);
+      note.then(response => {
+        this._notes.push(response);
       });
+
+      return note;
+    } catch (error) {
+      throw error;
+    }
   }
   deleteNote(id) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        this._notes = this._notes.filter(item => item.id !== id);
+    const deleteItems = api.deleteNote(id);
+    this._notes = this._notes.filter(item => item.id !== id);
 
-        resolve(this._notes);
-      }, 200);
-    })
-      .then(() => {
-        this._notes = this._notes.filter(item => item.id !== id);
-
-        return id;
-      })
-      .then(id => {
-        api.deleteNote(id);
-      });
+    return deleteItems;
   }
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
@@ -74,6 +63,8 @@ export default class Notepad {
     note.priority = priority;
   }
   filterNotesByQuery(query) {
+    console.log(query);
+
     return new Promise(resolve => {
       setTimeout(() => {
         const filteredNote = [];
