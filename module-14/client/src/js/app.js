@@ -1,34 +1,22 @@
 import MicroModal from 'micromodal';
-import { Notyf } from 'notyf';
+import { notyf } from './utils/plugins';
 import 'notyf/notyf.min.css';
 import { NOTE_ACTIONS } from './utils/constants';
 import Notepad from './utils/notepad-model';
 import { refs, renderNoteList, addListItem } from './utils/view';
 import * as api from './services/api';
 
-// Plugins
-//=============================================================================
-const notyf = new Notyf({
-  delay: 2500,
-  types: [
-    {
-      type: 'info',
-      backgroundColor: '#f1ae13',
-    },
-    {
-      type: 'delete',
-      backgroundColor: '#68aaf1',
-    },
-  ],
-});
-//=============================================================================
-
 const item = new Notepad();
 
-api.getNotes().then(note => {
-  renderNoteList(refs.list, note);
-  item._notes = note;
-});
+api
+  .getNotes()
+  .then(note => {
+    renderNoteList(refs.list, note);
+    item._notes = note;
+  })
+  .catch(error => {
+    notyf.error(`${error}`);
+  });
 
 // Handlers
 //=============================================================================
@@ -66,9 +54,7 @@ const handleEditorSubmit = event => {
 
 const handleFilterNotes = event => {
   const filterNotes = item.filterNotesByQuery(event.target.value);
-  console.log(item._notes);
-
-  filterNotes.then(noteFilter => renderNoteList(refs.list, noteFilter));
+  renderNoteList(refs.list, filterNotes);
 };
 
 const handleDeleteNote = ({ target }) => {
@@ -93,7 +79,6 @@ const handleOpenModale = () => {
 const removeListItem = element => {
   const parentListItem = element.closest('.note-list__item');
   const currentId = parentListItem.dataset.id;
-
   try {
     const deleteNote = item.deleteNote(currentId);
 

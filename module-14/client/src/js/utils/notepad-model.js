@@ -6,15 +6,13 @@ export default class Notepad {
     this._notes = notes;
   }
   get notes() {
-    const notes = api.getNotes();
-    console.log(notes);
-
-    // return api.getNotes().then(notes => {
-
-    this._notes = notes;
-
-    return this._notes;
-    // });
+    try {
+      const notes = api.getNotes();
+      this._notes = notes;
+      return this._notes;
+    } catch (error) {
+      throw error;
+    }
   }
   findNoteById(id) {
     for (const note of this._notes) {
@@ -41,10 +39,14 @@ export default class Notepad {
     }
   }
   deleteNote(id) {
-    const deleteItems = api.deleteNote(id);
-    this._notes = this._notes.filter(item => item.id !== id);
+    try {
+      const deleteItems = api.deleteNote(id);
+      this._notes = this._notes.filter(item => item.id !== id);
 
-    return deleteItems;
+      return deleteItems;
+    } catch (error) {
+      throw error;
+    }
   }
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
@@ -63,23 +65,17 @@ export default class Notepad {
     note.priority = priority;
   }
   filterNotesByQuery(query) {
-    console.log(query);
+    const filteredNote = [];
+    for (let i = 0; i < this._notes.length; i += 1) {
+      const { title, body } = this._notes[i];
+      const note = `${title} ${body}`;
+      const resultNote = note.toLowerCase().includes(query.toLowerCase());
 
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const filteredNote = [];
-        for (let i = 0; i < this._notes.length; i += 1) {
-          const { title, body } = this._notes[i];
-          const note = `${title} ${body}`;
-          const resultNote = note.toLowerCase().includes(query.toLowerCase());
-          if (resultNote) {
-            filteredNote.push(this._notes[i]);
-          }
-
-          resolve(filteredNote);
-        }
-      }, 200);
-    });
+      if (resultNote) {
+        filteredNote.push(this._notes[i]);
+      }
+    }
+    return filteredNote;
   }
   filterNotesByPriority(priority) {
     const filteredNotesOnPriority = [];
