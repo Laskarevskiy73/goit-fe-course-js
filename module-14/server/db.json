@@ -4,25 +4,37 @@
       "id": "XWaQXcbk0",
       "title": "JavaScript essentials",
       "body": "Get comfortable with all basic JavaScript concepts: variables, loops, arrays, branching, objects, functions, scopes, prototypes etc",
-      "priority": 0
+      "priority": 1
     },
     {
       "id": "pkXzyRp1P",
       "title": "Refresh HTML and CSS",
       "body": "Need to refresh HTML and CSS concepts, after learning some JavaScript. Maybe get to know CSS Grid and PostCSS, they seem to be trending.",
-      "priority": 1
+      "priority": 2
     },
     {
       "id": "QMom9q4Ku",
       "title": "Get comfy with Frontend frameworks",
       "body": "First must get some general knowledge about frameworks, then maybe try each one for a week or so. Need to choose between React, Vue and Angular, by reading articles and watching videos.",
-      "priority": 1
+      "priority": 0
     },
     {
       "id": "k2k0UrjZG",
       "title": "Winter clothes",
       "body": "Winter is coming! Need some really warm clothes: shoes, sweater, hat, jacket, scarf etc. Maybe should get a set of sportwear as well so I'll be able to do some excercises in the park.",
-      "priority": 2
+      "priority": 1
+    },
+    {
+      "title": "In dui magna posuere eget",
+      "body": "Proin magna. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id tortor. Etiam vitae tortor. Nullam dictum felis eu pede mollis pretium.\n\nNam eget dui. Fusce commodo aliquam arcu. Duis vel nibh at velit scelerisque suscipit. Aenean viverra rhoncus pede.\n\nQuisque malesuada placerat nisl. Proin faucibus arcu quis ante. Suspendisse non nisl sit amet velit hendrerit rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n\nMaecenas vestibulum mollis diam. Aenean vulputate eleifend tellus. Vestibulum eu odio. Praesent ut ligula non mi varius sagittis.",
+      "priority": 2,
+      "id": "gM6mx6U"
+    },
+    {
+      "title": "Vestibulum facilisis purus",
+      "body": "Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Curabitur blandit mollis lacus.",
+      "priority": 0,
+      "id": "uY6gbun"
     }
   ]
 }
