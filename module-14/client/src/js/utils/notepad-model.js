@@ -1,19 +1,22 @@
-import { PRIORITY_TYPES } from './constants';
+import { PRIORITY_TYPES, PRIORITIES } from './constants';
 import * as api from '../services/api';
 
 export default class Notepad {
   constructor(notes = []) {
     this._notes = notes;
   }
+
   get notes() {
     try {
       const notes = api.getNotes();
       this._notes = notes;
+
       return this._notes;
     } catch (error) {
       throw error;
     }
   }
+
   findNoteById(id) {
     for (const note of this._notes) {
       if (note.id === id) {
@@ -21,15 +24,16 @@ export default class Notepad {
       }
     }
   }
+
   saveNote(title, body) {
     try {
       const newNote = {
-        title: title,
-        body: body,
+        title,
+        body,
         priority: Notepad.getPriorityName(),
       };
       const note = api.saveNote(newNote);
-      note.then(response => {
+      note.then((response) => {
         this._notes.push(response);
       });
 
@@ -38,6 +42,7 @@ export default class Notepad {
       throw error;
     }
   }
+
   deleteNote(id) {
     try {
       const deleteItems = api.deleteNote(id);
@@ -48,6 +53,7 @@ export default class Notepad {
       throw error;
     }
   }
+
   updateNoteContent(id, updatedContent) {
     const note = this.findNoteById(id);
     const updateNoteContent = Object.keys(updatedContent);
@@ -56,14 +62,29 @@ export default class Notepad {
       note[key] = updatedContent[key];
     }
   }
-  updateNotePriority(id, priority) {
+
+  updateNotePriorityIncrement(id) {
+    const note = this.findNoteById(id);
+    if (note.priority !== PRIORITIES[2].id) {
+      note.priority = note.priority += 1;
+
+      api.patchNote(id, note.priority);
+
+      return note;
+    }
+  }
+
+  updateNotePriorityDicrement(id) {
     const note = this.findNoteById(id);
 
-    if (!note) {
-      return;
+    if (note.priority !== PRIORITIES[0].id) {
+      note.priority = note.priority -= 1;
+
+      api.patchNote(id, note.priority);
+      return note;
     }
-    note.priority = priority;
   }
+
   filterNotesByQuery(query) {
     const filteredNote = [];
     for (let i = 0; i < this._notes.length; i += 1) {
@@ -77,9 +98,10 @@ export default class Notepad {
     }
     return filteredNote;
   }
+
   filterNotesByPriority(priority) {
     const filteredNotesOnPriority = [];
-    const notes = this.notes;
+    const { notes } = this;
 
     for (const note of notes) {
       if (note.priority === priority) {
@@ -93,7 +115,7 @@ export default class Notepad {
     const valuesPriorityType = Object.values(PRIORITY_TYPES);
 
     if (valuesPriorityType.includes(priorityId)) {
-      return Notepad.PRIORITIES[priorityId].name;
+      return PRIORITIES[priorityId].name;
     }
 
     return PRIORITY_TYPES.LOW;

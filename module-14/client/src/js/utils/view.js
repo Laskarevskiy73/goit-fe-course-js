@@ -2,7 +2,7 @@ import createlistItem from '../../templates/list-items.hbs';
 import Notepad from './notepad-model';
 
 // Referens
-//=============================================================================
+//= ============================================================================
 export const refs = {
   list: document.querySelector('.note-list'),
   editor: document.querySelector('.note-editor'),
@@ -10,12 +10,12 @@ export const refs = {
   openEditorModale: document.querySelector('button[data-action="open-editor"]'),
 };
 
-//=============================================================================
+//= ============================================================================
 
 // Rendering and Adds list item
-//=============================================================================
+//= ============================================================================
 export const renderNoteList = (listRef, notes) => {
-  const listItems = notes.map(item => {
+  const listItems = notes.map((item) => {
     const newItem = { ...item };
     newItem.priority = Notepad.getPriorityName(newItem.priority);
 
@@ -23,7 +23,7 @@ export const renderNoteList = (listRef, notes) => {
   });
 
   listRef.innerHTML = '';
-  listRef.insertAdjacentHTML('afterbegin', listItems.join(''));
+  listRef.insertAdjacentHTML('beforeend', listItems.join(''));
 };
 
 export const addListItem = (listRef, item) => {
@@ -31,7 +31,7 @@ export const addListItem = (listRef, item) => {
   newItem.priority = Notepad.getPriorityName(newItem.priority);
   const createItem = createlistItem(newItem);
 
-  listRef.insertAdjacentHTML('afterbegin', createItem);
+  listRef.insertAdjacentHTML('beforeend', createItem);
 };
 
-//=============================================================================
+//= ============================================================================

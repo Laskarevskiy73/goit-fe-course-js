@@ -33,7 +33,7 @@ const handleEditorSubmit = event => {
   if (checkForEmptinessForm) {
     return notyf.open({
       type: 'info',
-      message: 'Необходимо заполнить все поля!',
+      message: 'All fields must be filled in!',
     });
   }
 
@@ -42,7 +42,10 @@ const handleEditorSubmit = event => {
 
     savedItem.then(savedNotes => {
       addListItem(refs.list, savedNotes);
-      notyf.success('Заметка успешно добавлена!');
+      notyf.open({
+        type: 'add',
+        message: 'Note successfully added!',
+      });
     });
   } catch (error) {
     notyf.error(`${error}`);
@@ -79,15 +82,78 @@ const handleOpenModale = () => {
 const removeListItem = element => {
   const parentListItem = element.closest('.note-list__item');
   const currentId = parentListItem.dataset.id;
+
   try {
     const deleteNote = item.deleteNote(currentId);
 
     deleteNote.then(noteDelete => {
       parentListItem.remove(noteDelete);
+
       notyf.open({
         type: 'delete',
-        message: 'Заметка успешно удалена!',
+        message: 'The note is successfully deleted!',
       });
+    });
+  } catch (error) {
+    notyf.error(`${error}`);
+  }
+};
+
+const handleUpdatePriorityIncrement = ({ target }) => {
+  const action = target.parentNode.dataset.action;
+
+  if (NOTE_ACTIONS.INCREASE_PRIORITY !== action) {
+    return;
+  }
+
+  const parentListItem = target.closest('.note-list__item');
+  const parentListItemId = parentListItem.dataset.id;
+
+  try {
+    const note = item.updateNotePriorityIncrement(parentListItemId);
+
+    if (note === undefined) {
+      notyf.open({
+        type: 'priority-undefined',
+        message: 'The highest priority!',
+      });
+      return;
+    }
+
+    renderNoteList(refs.list, item._notes);
+    notyf.open({
+      type: 'update-priority',
+      message: 'Priority increased!',
+    });
+  } catch (error) {
+    notyf.error(`${error}`);
+  }
+};
+const handleUpdatePriorityDicrement = ({ target }) => {
+  const action = target.parentNode.dataset.action;
+
+  if (NOTE_ACTIONS.DECREASE_PRIORITY !== action) {
+    return;
+  }
+
+  const parentListItem = target.closest('.note-list__item');
+  const parentListItemId = parentListItem.dataset.id;
+
+  try {
+    const note = item.updateNotePriorityDicrement(parentListItemId);
+
+    if (note === undefined) {
+      notyf.open({
+        type: 'priority-undefined',
+        message: 'The lowest priority!',
+      });
+      return;
+    }
+
+    renderNoteList(refs.list, item._notes);
+    notyf.open({
+      type: 'update-priority',
+      message: 'Priority is down!',
     });
   } catch (error) {
     notyf.error(`${error}`);
@@ -101,4 +167,6 @@ refs.editor.addEventListener('submit', handleEditorSubmit);
 refs.filter.addEventListener('input', handleFilterNotes);
 refs.list.addEventListener('click', handleDeleteNote);
 refs.openEditorModale.addEventListener('click', handleOpenModale);
+refs.list.addEventListener('click', handleUpdatePriorityIncrement);
+refs.list.addEventListener('click', handleUpdatePriorityDicrement);
 //=============================================================================

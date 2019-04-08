@@ -30,3 +30,15 @@ export const deleteNote = async id => {
     throw error;
   }
 };
+
+export const patchNote = async (id, priority) => {
+  try {
+    const response = await axios.patch(`${BASE_URL}/${id}`, {
+      priority: priority,
+    });
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
