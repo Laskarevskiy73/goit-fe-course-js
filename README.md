@@ -1,1 +1,3 @@
-# goit-fe-course-js
+Alt-My first JavaScript project
+======
+
