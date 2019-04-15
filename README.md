@@ -1,3 +1,3 @@
-Alt-My first JavaScript project
-======
+My first JavaScript project
+===========================
 
